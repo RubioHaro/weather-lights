@@ -16,6 +16,15 @@ interface WeatherData {
     };
 }
 
+/**
+ * Component to display weather information and safety status.
+ * Shows weather metrics, safety color code (GREEN/YELLOW/RED), and recommendations.
+ * 
+ * @param {Object} props
+ * @param {WeatherData} props.weather - The weather safety data to display.
+ * @param {Function} props.onReset - Callback function triggered when resetting to initial state.
+ * @returns {JSX.Element} The rendered weather display component.
+ */
 const WeatherDisplay = ({
     weather,
     onReset,
@@ -51,7 +60,7 @@ const WeatherDisplay = ({
                 ))}
             </div>
             <button className="btn-secondary" onClick={onReset}>
-                NUEVA CONSULTA
+                NEW CHECK
             </button>
         </div>
     );
