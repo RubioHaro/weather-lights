@@ -12,6 +12,9 @@ import { StorageService } from "./services/storage.service";
  */
 const App = (): JSX.Element => {
     const [currentView, setCurrentView] = useState<AppView>(AppView.LOADING);
+    const [selectedLocation, setSelectedLocation] = useState<
+        { lat: number; lon: number; name: string } | undefined
+    >(undefined);
 
     useEffect(() => {
         const bootSequence = setTimeout(() => {
@@ -37,7 +40,7 @@ const App = (): JSX.Element => {
             )}
 
             <div key={currentView} className="relative z-10 view-transition">
-                {renderView(currentView, setCurrentView)}
+                {renderView(currentView, setCurrentView, selectedLocation, setSelectedLocation)}
             </div>
         </div>
     );

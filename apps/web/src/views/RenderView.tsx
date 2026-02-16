@@ -7,6 +7,8 @@ import { AppView } from "../types/ui/AppView";
 export const renderView = (
     currentView: AppView,
     setCurrentView: React.Dispatch<React.SetStateAction<AppView>>,
+    selectedLocation?: { lat: number; lon: number; name: string },
+    setSelectedLocation?: React.Dispatch<React.SetStateAction<{ lat: number; lon: number; name: string } | undefined>>,
 ) => {
 
     switch (currentView) {
@@ -15,7 +17,10 @@ export const renderView = (
         case AppView.ADD_LOCATION:
             return (
                 <AddLocationView
-                    onSave={() => setCurrentView(AppView.DASHBOARD)}
+                    onSave={(location) => {
+                        setSelectedLocation?.(location);
+                        setCurrentView(AppView.DASHBOARD);
+                    }}
                 />
             );
         case AppView.SAVED_INSTALLATIONS:
@@ -27,14 +32,20 @@ export const renderView = (
         case AppView.DASHBOARD:
             return (
                 <WeatherDashboardView
+                    location={selectedLocation}
                 // onBack={() =>
                 //     setCurrentView(AppView.SAVED_INSTALLATIONS)
                 // }
                 />
             );
         default:
-            <AddLocationView
-                onSave={() => setCurrentView(AppView.SAVED_INSTALLATIONS)}
-            />;
+            return (
+                <AddLocationView
+                    onSave={(location) => {
+                        setSelectedLocation?.(location);
+                        setCurrentView(AppView.SAVED_INSTALLATIONS);
+                    }}
+                />
+            );
     }
 };
